@@ -1,0 +1,48 @@
+@import "./variables.scss";
+
+.block-page {
+  width: 100%;
+  height: 100%;
+  background: $blocking-alpha;
+  z-index: 998;
+  position: absolute;
+  text-align: center;
+  top: 0;
+}
+
+.full-page {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  z-index: 998;
+  position: absolute;
+  text-align: center;
+  top: 0;
+}
+
+.blocking-spinner-container {
+  width: 10%;
+  height: auto;
+  background: $regular-old-white;
+  border: solid 1px var(--mdc-theme-primary);
+  border-radius: 5px;
+  z-index: 999;
+  position: relative;
+  top: 40%;
+  left: 45%;
+  padding: 25px;
+}
+
+.full-page-spinner-container {
+  width: auto;
+  height: auto;
+  z-index: 999;
+  position: relative;
+  top: 40%;
+  padding: 25px;
+}
+
+.spinner-message {
+  width: 100%;
+  text-align: center;
+}

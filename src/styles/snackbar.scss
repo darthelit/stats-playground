@@ -1,0 +1,11 @@
+@import "./variables.scss";
+
+.mdc-snackbar__surface {
+    background-color: var(--mdc-theme-error);
+}
+
+.mdc-snackbar__label {
+    color: var(--mdc-theme-on-error);
+    font-size: 1rem;
+    text-align: center;
+}

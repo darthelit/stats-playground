@@ -1,0 +1,7 @@
+@import './variables.scss';
+
+.divider {
+  width: 95%;
+  margin: auto;
+  border-top: 1px solid $light-grey-background;
+}

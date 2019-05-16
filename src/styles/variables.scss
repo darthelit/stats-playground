@@ -1,0 +1,52 @@
+@import './_root.scss';
+
+@function to-string($value) {
+  @return inspect($value);
+}
+
+@function str-replace($input, $search, $replace: '') {
+  $string: to-string($input);
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+$blocking-alpha: rgba(0, 0, 0, 0.32);
+$background-color: #f7f7f7;
+$material-label: rgba(0, 0, 0, 0.54);
+$bb8-grey: #8B8B8B;
+$regular-old-white: #fff;
+$light-grey-background: #e8e8e8;
+
+//Phoenix Velocity
+// TODO: reassign to vars using mdc theme wherever possible
+$phoenix-velocity-primary: #1976d2;
+$primary-hash-code: str-replace($phoenix-velocity-primary, '#', '');
+$phoenix-velocity-primary-light: #60b2ff;
+$phoenix-velocity-primary-dark: #00579d;
+$phoenix-velocity-secondary: #006064;
+$phoenix-velocity-secondary-light: #428e92;
+$phoenix-velocity-text-primary: #010101;
+$phoenix-velocity-default: hsl(
+    hue($phoenix-velocity-primary),
+    15%,
+    lightness($phoenix-velocity-primary)
+);
+$phoenix-velocity-default-with-alpha: rgba(95, 116, 129, 0.8);
+$phoenix-velocity-danger: #c0392b;
+
+$phoenix-velocity-default-border: #e3e3e3;
+$phoenix-velocity-primary-border: #1283ce;
+$phoenix-velocity-success: #15c15d;
+$phoenix-velocity-danger: #df3320;
+$phoenix-velocity-info: #0f9fff;
+$phoenix-velocity-warning: #f37d16;
+$phoenix-velocity-highlight: #ecf0f1;
+$phoenix-velocity-text-primary: #010101;
+
+$phoenix-velocity-border-color: #e0e0e0;
+$phoenix-velocity-card-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);

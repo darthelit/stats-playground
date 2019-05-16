@@ -1,0 +1,26 @@
+@import "./variables.scss";
+
+.simple-card {
+  height: 100%;
+}
+
+.simple-card-primary-action {
+  padding: 12px;
+  height: 100%;
+}
+
+.simple-card-title {
+  margin: 0;
+  color: $phoenix-velocity-primary-dark;
+}
+
+.simple-card-subtitle {
+  margin: 0;
+  color: var(--mdc-theme-text-secondary-on-background, $material-label)
+}
+
+.simple-card-caption {
+  padding-top: 1rem;
+  margin: 0;
+  color: var(--mdc-theme-text-secondary-on-background, $material-label)
+}

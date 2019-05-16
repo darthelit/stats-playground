@@ -1,0 +1,144 @@
+@import './variables.scss';
+
+$error-color: var(--mdc-theme-error, #b00020);
+$color-gray-300: #e0e0e0;
+
+.material-react-select-container {
+  margin-bottom: 20px;
+}
+
+.material-react-select__control {
+  background-color: inherit !important;
+  min-height: 54px !important;
+  border-width: 0 0 1px !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  padding: 5px 0 6px !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  &:hover:not(.material-react-select__control--is-focused):not(.material-react-select__control-has-error) {
+    border-color: $phoenix-velocity-primary-dark !important;
+    border-width: 0 0 2px !important;
+  }
+}
+
+.material-react-select__control-has-error {
+  border-color: $error-color !important;
+  border-width: 0 0 2px !important;
+  &:not(.material-react-select__control--is-focused) {
+    border-width: 0 0 1px !important;
+  }
+}
+
+.material-react-select__control--is-focused:not(.material-react-select__control-has-error) {
+  border-color: var(--mdc-theme-primary) !important;
+  border-width: 0 0 2px !important;
+}
+
+.material-react-select-component.material-react-select-component--box .floating-label {
+  position: relative;
+  top: 50px;
+  left: 0px;
+  transition: top 0.3s ease;//, left 0.3s ease;
+  font-size: 1rem !important;
+  font-weight: bold !important;
+  line-height: 1.42857 !important;
+  z-index: 0;
+  color: var(--mdc-theme-text-secondary-on-background);
+}
+
+
+.material-react-select-component.material-react-select-component--box .floating-label__is-focused:not(.floating-label__has-error) {
+  color: var(--mdc-theme-primary) !important;
+}
+
+.material-react-select-component.material-react-select-component--box .floating-label__is-floating {
+  top: 20px;
+  left: 0;
+  position: relative;
+  font-size: .75rem !important;
+  font-weight: bold !important;
+  line-height: 0.75rem !important;
+  transform: translate(0, 1.5px) scale(0.75);
+  transform-origin: top left;
+}
+
+.material-react-select-component.material-react-select-component--box .floating-label__has-error {
+  color: $error-color;
+}
+
+.material-react-select__value-container {
+  max-width: 80% !important;
+  margin-top: 12px !important;
+}
+
+.material-react-select__multi-value {
+  padding: 6px !important;
+  border-radius: 16px !important;
+}
+
+.material-react-select__multi-value__remove {
+  padding: 2px !important;
+  border-radius: 16px !important;
+  background-color: rgba(0, 0, 0, 0.26) !important; //TODO: Look for a variable for this
+  color: $color-gray-300 !important;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.4) !important; //TODO: Look for a variable for this
+    color: $color-gray-300 !important;
+  }
+}
+
+.material-react-select__multi-value__label {
+  padding: 0 6px !important;
+}
+
+.material-react-select__indicators .clear-indicator {
+  color: var(--mdc-theme-text-secondary-on-background);
+  &:hover {
+    color: $error-color;
+  }
+}
+
+.material-react-select__indicator-separator {
+  display: none;
+}
+
+.material-react-select__indicators .drop-down-indicator {
+  color: var(--mdc-theme-text-secondary-on-background);
+}
+
+.material-react-select-label {
+  top: -20px;
+  left: 0;
+  position: relative;
+  font-size: .75rem !important;
+  font-weight: 400 !important;
+  line-height: 0.75rem !important;
+}
+
+.material-react-select-error-label {
+  color: $error-color;
+  @extend .material-react-select-label;
+}
+
+.bottom-label__is-focused {
+  color: var(--mdc-theme-primary) !important;
+}
+
+.material-react-select-helper-label {
+  @extend .material-react-select-label;
+  color: hsl(0,0,50); 
+}
+
+.material-react-select__group-heading {
+  color: $regular-old-white !important;
+}
+
+.group-heading-override {
+  color: $regular-old-white !important;
+  background: $phoenix-velocity-primary;
+  padding: 5px 0px;
+  display: flex;
+  position: sticky;
+  top: -5px;
+}
