@@ -36,8 +36,8 @@ class ScratchContainer extends React.Component {
       const homeTeam = this.state.gameData.gameData.teams.home;
       const awayTeam = this.state.gameData.gameData.teams.away;
 
-      const homePlayers = _filter(this.state.gameData.gameData.players, ['currentTeam.triCode', homeTeam.triCode]);
-      const awayPlayers = _filter(this.state.gameData.gameData.players, ['currentTeam.triCode', awayTeam.triCode]);
+      const homePlayers = this.state.gameData.homePlayers;
+      const awayPlayers = this.state.gameData.awayPlayers;
       const homePlayerOpts = homePlayers.map(player => {
         return <option key={player.id} id={player.id} value={player.id}>{player.fullName}</option>
       });
@@ -62,7 +62,7 @@ class ScratchContainer extends React.Component {
         return (
           <div key={goal.result.eventCode}>
             <h3>{scoringTeam} GOAL! | {homeScore} - {awayScore}</h3>
-            <span>{period} {periodTimeRemaining}</span> <br />
+            <span>{period} {periodTime}</span> <br />
             <span style={{ fontWeight: 'bold' }}>{goalType}</span><br />
             <span>{goalScorer.player.fullName} </span>
             <span>from {assists.join(', ')}</span>
@@ -72,8 +72,11 @@ class ScratchContainer extends React.Component {
 
 
       let playerStats = {};
+      let homeTeamStats = {};
+      let awayTeamStats = {};
 
       const hittingPlays = _filter(this.state.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'HIT']);
+
       _forEach(hittingPlays, (play) => {
         const hitter = _filter(play.players, ['playerType', 'Hitter'])[0];
         const hittee = _filter(play.players, ['playerType', 'Hittee'])[0];
@@ -86,25 +89,31 @@ class ScratchContainer extends React.Component {
             hitteeCount: 0
           };
         } else {
-          util.isEmpty(playerStats[hitter.player.id].blockedShotsCount) ? playerStats[hitter.player.id].blockedShotsCount = 1 : playerStats[hitter.player.id].hitterCount++;
+          util.isEmpty(playerStats[hitter.player.id].hitterCount) ? playerStats[hitter.player.id].hitterCount = 1 : playerStats[hitter.player.id].hitterCount++;
         }
 
         if (util.isEmpty(playerStats[hittee.player.id])) {
-          playerStats[hitter.player.id] = {
-            id: hitter.player.id,
-            fullName: hitter.player.fullName,
+          playerStats[hittee.player.id] = {
+            id: hittee.player.id,
+            fullName: hittee.player.fullName,
             hitterCount: 0,
             hitteeCount: 1
           };
         } else {
-          util.isEmpty(playerStats[hittee.player.id].blockedShotsCount) ? playerStats[hittee.player.id].blockedShotsCount = 1 : playerStats[hittee.player.id].hitteeCount++;
+          util.isEmpty(playerStats[hittee.player.id].hitteeCount) ? playerStats[hittee.player.id].hitteeCount = 1 : playerStats[hittee.player.id].hitteeCount++;
+        }
+
+        if (!util.isEmpty(_filter(homePlayers, ['id', hitter.player.id]))) {
+          util.isEmpty(homeTeamStats.hits) ? homeTeamStats.hits = 1 : homeTeamStats.hits++;
+        } else if (!util.isEmpty(_filter(awayPlayers, ['id', hitter.player.id]))) {
+          util.isEmpty(awayTeamStats.hits) ? awayTeamStats.hits = 1 : awayTeamStats.hits++;
         }
       });
 
       const hittingPlaysComp = _map(playerStats, (player) => {
         if(!util.isEmpty(player.hitterCount) || !util.isEmpty(player.hitteeCount)){
           return (
-            <div key={`${player.id}-hits`}>
+            <div key={`${player.id}-hits`} id={`${player.id}-hits`}>
               <span>{player.fullName} -- </span>
               {player.hitterCount > 0 ? <span>Hits Given: {player.hitterCount} </span> : ''}
               {player.hitterCount > 0 && player.hitteeCount > 0 ? <span> | </span>: ''}
@@ -142,6 +151,20 @@ class ScratchContainer extends React.Component {
         } else {
           util.isEmpty(playerStats[shooter.player.id].shotsBlockedCount) ? playerStats[shooter.player.id].shotsBlockedCount = 1 : playerStats[shooter.player.id].shotsBlockedCount++;
         }
+
+        /// SHOTS TAKEN
+        if (!util.isEmpty(_filter(homePlayers, ['id', shooter.player.id]))) {
+          util.isEmpty(homeTeamStats.shotsTaken) ? homeTeamStats.shotsTaken = 1 : homeTeamStats.shotsTaken++;
+        } else if (!util.isEmpty(_filter(awayPlayers, ['id', shooter.player.id]))) {
+          util.isEmpty(awayTeamStats.shotsTaken) ? awayTeamStats.shotsTaken = 1 : awayTeamStats.shotsTaken++;
+        }
+
+        //// BLOCKS
+        if (!util.isEmpty(_filter(homePlayers, ['id', blocker.player.id]))) {
+          util.isEmpty(homeTeamStats.blocks) ? homeTeamStats.blocks = 1 : homeTeamStats.blocks++;
+        } else if (!util.isEmpty(_filter(awayPlayers, ['id', blocker.player.id]))) {
+          util.isEmpty(awayTeamStats.blocks) ? awayTeamStats.blocks = 1 : awayTeamStats.blocks++;
+        }
       });
 
       const blockedShotPlaysComp = _map(playerStats, (player) => {
@@ -174,6 +197,14 @@ class ScratchContainer extends React.Component {
         } else {
           util.isEmpty(playerStats[shooter.player.id].shotsOnGoal) ? playerStats[shooter.player.id].shotsOnGoal = 1 : playerStats[shooter.player.id].shotsOnGoal++;
         }
+
+        if (!util.isEmpty(_filter(homePlayers, ['id', shooter.player.id]))) {
+          util.isEmpty(homeTeamStats.shots) ? homeTeamStats.shots = 1 : homeTeamStats.shots++;
+          util.isEmpty(homeTeamStats.shotsTaken) ? homeTeamStats.shotsTaken = 1 : homeTeamStats.shotsTaken++;
+        } else if (!util.isEmpty(_filter(awayPlayers, ['id', shooter.player.id]))) {
+          util.isEmpty(awayTeamStats.shots) ? awayTeamStats.shots = 1 : awayTeamStats.shots++;
+          util.isEmpty(awayTeamStats.shotsTaken) ? awayTeamStats.shotsTaken = 1 : awayTeamStats.shotsTaken++;
+        }
       });
       _forEach(missedShotPlays, (play) => {
         const shooter = _filter(play.players, ['playerType', 'Shooter'])[0];
@@ -187,6 +218,12 @@ class ScratchContainer extends React.Component {
           }
         } else {
           util.isEmpty(playerStats[shooter.player.id].missedShots) ? playerStats[shooter.player.id].missedShots = 1 : playerStats[shooter.player.id].missedShots++;
+        }
+
+        if (!util.isEmpty(_filter(homePlayers, ['id', shooter.player.id]))) {
+          util.isEmpty(homeTeamStats.shotsTaken) ? homeTeamStats.shotsTaken = 1 : homeTeamStats.shotsTaken++;
+        } else if (!util.isEmpty(_filter(awayPlayers, ['id', shooter.player.id]))) {
+          util.isEmpty(awayTeamStats.shotsTaken) ? awayTeamStats.shotsTaken = 1 : awayTeamStats.shotsTaken++;
         }
       });
 
@@ -380,6 +417,7 @@ class ScratchContainer extends React.Component {
           <br />
           <div>
             <h2 style={{ textDecoration: 'underline'}}>Hit Count</h2>
+            <h3>{homeTeam.name} - {homeTeamStats.hits}</h3> <h3>{awayTeam.name} - {awayTeamStats.hits}</h3>
             {hittingPlaysComp}
           </div>
           <br />
@@ -389,6 +427,9 @@ class ScratchContainer extends React.Component {
           </div>
           <div>
             <h2 style={{ textDecoration: 'underline'}}>Shots</h2>
+            <h3>{homeTeam.name} - {homeTeamStats.shots}</h3> <h3>{awayTeam.name} - {awayTeamStats.shots}</h3>
+            <h3 style={{ textDecoration: 'underline'}}>Shot Attempts</h3>
+            <h3>{homeTeam.name} - {homeTeamStats.shotsTaken}</h3> <h3>{awayTeam.name} - {awayTeamStats.shotsTaken}</h3>
             {shotPlaysComp}
           </div>
           <div>

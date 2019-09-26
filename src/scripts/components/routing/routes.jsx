@@ -4,8 +4,14 @@ import ScratchContainer from '../../containers/ScratchContainer'
 
 export default () => (
   <Switch>
-    <Route path="/" component={ScratchContainer} />
+    <Route path="/scratch" component={Scratch} />
   </Switch>
+);
+
+const Scratch = ({ match }) => (
+  <main>
+    <Route exact path={`${match.url}/`} component={ScratchContainer} />
+  </main>
 );
 
 

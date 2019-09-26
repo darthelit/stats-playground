@@ -18,9 +18,11 @@ module.exports = _assignIn(_clone(require('./webpack.config')), {
               use: ["style-loader", 'css-loader', {
                 "loader": "sass-loader",
                 options: {
+                  sassOptions: {
                   "includePaths": [
                     require('path').resolve(__dirname, 'node_modules')
                   ]
+                }
                 }
               }]
             }

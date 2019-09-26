@@ -11,20 +11,22 @@ module.exports = {
     ],
     module: {
         rules: [
-            {test: /.json$/, use: 'json-loader', exclude: /node_modules/},
-            {test: /.jsx?$/, use: 'babel-loader', exclude: /node_modules/},
-            {
-                test: /\.scss|\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', {
-                  "loader": "sass-loader",
-                  options: {
-                    "includePaths": [
-                      require('path').resolve(__dirname, 'node_modules')
-                    ],
-                    publicPath: '/nhl-stats/styles/'
-                  }
-                }]
-            }
+          {test: /.json$/, use: 'json-loader', exclude: /node_modules/},
+          {test: /.jsx?$/, use: 'babel-loader', exclude: /node_modules/},
+          {
+            test: /\.scss|\.css$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader', {
+            loader: "sass-loader",
+            options: {
+              sassOptions: {
+                includePaths: [
+                require('path').resolve(__dirname, 'node_modules')
+                ],
+              },
+              publicPath: '/nhl-stats/styles/'
+              }
+            }]
+          }
         ],
     },
     output: {
