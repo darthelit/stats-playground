@@ -5,7 +5,7 @@ import {
   RECYCLE_GAME_DATA_STORE,
   FETCH_GAME_DATA,
   UPDATE_GAME_DATA
-} from '../../helpers/Constants';
+} from '../../utils/Constants';
 
 class GameDataStore extends ReduceStore {
   constructor() {

@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { forEach as _forEach } from 'lodash';
+import {
+  forEach as _forEach
+} from 'lodash';
 // import gameData from '../../../data/Blues_Jets_Game_1.js';
 
 // Game 1 vs. Winnipeg
@@ -11,7 +13,10 @@ const GameDataSource = {
     //   .then(data => {
     //     gameData = data.data;
     //   });
-    const {data} = await axios.get('http://statsapi.web.nhl.com/api/v1/game/2018030412/feed/live');
+    // const {data} = await axios.get('http://statsapi.web.nhl.com/api/v1/game/2018030412/feed/live');
+    const {
+      data
+    } = await axios.get('http://statsapi.web.nhl.com/api/v1/game/2018030417/feed/live');
 
     // return callback(data.data);
 
@@ -21,7 +26,7 @@ const GameDataSource = {
     const homePlayers = [];
     const awayPlayers = [];
 
-    _forEach( data.gameData.players, player => {
+    _forEach(data.gameData.players, player => {
       if (player.currentTeam) {
         if (player.currentTeam.id === homeTeam.id) {
           homePlayers.push(player);

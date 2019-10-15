@@ -7,7 +7,7 @@ import {
 } from 'lodash'
 import GameDataActions from '../flux/game-data/GameDataActions';
 import GameDataStore from '../flux/game-data/GameDataStore';
-import util from '../helpers/util';
+import util from '../utils/util';
 
 import '../../styles/style.scss';
 
@@ -33,6 +33,8 @@ class ScratchContainer extends React.Component {
 
   render() {
     if(!util.isEmpty(this.state.gameData)) {
+      const { players } = this.state.gameData.gameData;
+
       const homeTeam = this.state.gameData.gameData.teams.home;
       const awayTeam = this.state.gameData.gameData.teams.away;
 
@@ -81,27 +83,49 @@ class ScratchContainer extends React.Component {
         const hitter = _filter(play.players, ['playerType', 'Hitter'])[0];
         const hittee = _filter(play.players, ['playerType', 'Hittee'])[0];
 
-        if(util.isEmpty(playerStats[hitter.player.id])) {
-          playerStats[hitter.player.id] = {
-            id: hitter.player.id,
-            fullName: hitter.player.fullName,
-            hitterCount: 1,
-            hitteeCount: 0
-          };
-        } else {
-          util.isEmpty(playerStats[hitter.player.id].hitterCount) ? playerStats[hitter.player.id].hitterCount = 1 : playerStats[hitter.player.id].hitterCount++;
+        if(!util.isEmpty(players[`ID${hitter.player.id}`])) {
+          if(util.isEmpty(players[`ID${hitter.player.id}`]['stats'])) {
+            players[`ID${hitter.player.id}`]['stats'] = {
+              hitterCount: 1,
+              hitteeCount: 0
+            }
+          } else {
+            util.isEmpty(players[`ID${hitter.player.id}`]['stats'].hitterCount) ? players[`ID${hitter.player.id}`]['stats'].hitterCount = 1 : players[`ID${hitter.player.id}`]['stats'].hitterCount++;
+          }
         }
 
-        if (util.isEmpty(playerStats[hittee.player.id])) {
-          playerStats[hittee.player.id] = {
-            id: hittee.player.id,
-            fullName: hittee.player.fullName,
-            hitterCount: 0,
-            hitteeCount: 1
-          };
-        } else {
-          util.isEmpty(playerStats[hittee.player.id].hitteeCount) ? playerStats[hittee.player.id].hitteeCount = 1 : playerStats[hittee.player.id].hitteeCount++;
+        if(!util.isEmpty(players[`ID${hittee.player.id}`])) {
+          if(util.isEmpty(players[`ID${hittee.player.id}`]['stats'])) {
+            players[`ID${hittee.player.id}`]['stats'] = {
+              hitterCount: 0,
+              hitteeCount: 1
+            }
+          } else {
+            util.isEmpty(players[`ID${hittee.player.id}`]['stats'].hitteeCount) ? players[`ID${hittee.player.id}`]['stats'].hitteeCount = 1 : players[`ID${hittee.player.id}`]['stats'].hitteeCount++;
+          }
         }
+
+        // if(util.isEmpty(playerStats[hitter.player.id])) {
+        //   playerStats[hitter.player.id] = {
+        //     id: hitter.player.id,
+        //     fullName: hitter.player.fullName,
+        //     hitterCount: 1,
+        //     hitteeCount: 0
+        //   };
+        // } else {
+        //   util.isEmpty(playerStats[hitter.player.id].hitterCount) ? playerStats[hitter.player.id].hitterCount = 1 : playerStats[hitter.player.id].hitterCount++;
+        // }
+
+        // if (util.isEmpty(playerStats[hittee.player.id])) {
+        //   playerStats[hittee.player.id] = {
+        //     id: hittee.player.id,
+        //     fullName: hittee.player.fullName,
+        //     hitterCount: 0,
+        //     hitteeCount: 1
+        //   };
+        // } else {
+        //   util.isEmpty(playerStats[hittee.player.id].hitteeCount) ? playerStats[hittee.player.id].hitteeCount = 1 : playerStats[hittee.player.id].hitteeCount++;
+        // }
 
         if (!util.isEmpty(_filter(homePlayers, ['id', hitter.player.id]))) {
           util.isEmpty(homeTeamStats.hits) ? homeTeamStats.hits = 1 : homeTeamStats.hits++;
@@ -110,16 +134,37 @@ class ScratchContainer extends React.Component {
         }
       });
 
-      const hittingPlaysComp = _map(playerStats, (player) => {
-        if(!util.isEmpty(player.hitterCount) || !util.isEmpty(player.hitteeCount)){
-          return (
-            <div key={`${player.id}-hits`} id={`${player.id}-hits`}>
-              <span>{player.fullName} -- </span>
-              {player.hitterCount > 0 ? <span>Hits Given: {player.hitterCount} </span> : ''}
-              {player.hitterCount > 0 && player.hitteeCount > 0 ? <span> | </span>: ''}
-              {player.hitteeCount > 0 ? <span>Hits Taken: {player.hitteeCount}</span> : ''}
-            </div>
-          )
+      const awayHittingPlaysComp = _map(players, (player) => {
+        if(!util.isEmpty(player.currentTeam) && player.currentTeam.id === awayTeam.id) {
+          if(!util.isEmpty(player.stats)){
+            if(!util.isEmpty(player.stats.hitterCount) || !util.isEmpty(player.stats.hitteeCount)){
+              return (
+                <div key={`${player.id}-hits`} id={`${player.id}-hits`}>
+                  <span>{player.fullName} -- </span>
+                  {player.stats.hitterCount > 0 ? <span>Hits Given: {player.stats.hitterCount} </span> : ''}
+                  {player.stats.hitterCount > 0 && player.stats.hitteeCount > 0 ? <span> | </span>: ''}
+                  {player.stats.hitteeCount > 0 ? <span>Hits Taken: {player.stats.hitteeCount}</span> : ''}
+                </div>
+              )
+            }
+          }
+        }
+      });
+
+      const homeHittingPlaysComp = _map(players, (player) => {
+        if(!util.isEmpty(player.currentTeam) && player.currentTeam.id === homeTeam.id) {
+          if(!util.isEmpty(player.stats)){
+            if(!util.isEmpty(player.stats.hitterCount) || !util.isEmpty(player.stats.hitteeCount)){
+              return (
+                <div key={`${player.id}-hits`} id={`${player.id}-hits`}>
+                  <span>{player.fullName} -- </span>
+                  {player.stats.hitterCount > 0 ? <span>Hits Given: {player.stats.hitterCount} </span> : ''}
+                  {player.stats.hitterCount > 0 && player.stats.hitteeCount > 0 ? <span> | </span>: ''}
+                  {player.stats.hitteeCount > 0 ? <span>Hits Taken: {player.stats.hitteeCount}</span> : ''}
+                </div>
+              )
+            }
+          }
         }
       });
 
@@ -417,8 +462,11 @@ class ScratchContainer extends React.Component {
           <br />
           <div>
             <h2 style={{ textDecoration: 'underline'}}>Hit Count</h2>
-            <h3>{homeTeam.name} - {homeTeamStats.hits}</h3> <h3>{awayTeam.name} - {awayTeamStats.hits}</h3>
-            {hittingPlaysComp}
+            <h3>{homeTeam.name} - {homeTeamStats.hits}</h3>
+            {homeHittingPlaysComp}
+
+            <h3>{awayTeam.name} - {awayTeamStats.hits}</h3>
+            {awayHittingPlaysComp}
           </div>
           <br />
           <div>
