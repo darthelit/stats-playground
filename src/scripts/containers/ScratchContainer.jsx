@@ -38,8 +38,8 @@ class ScratchContainer extends React.Component {
       const homeTeam = this.state.gameData.gameData.teams.home;
       const awayTeam = this.state.gameData.gameData.teams.away;
 
-      const homePlayers = this.state.gameData.homePlayers;
-      const awayPlayers = this.state.gameData.awayPlayers;
+      const homePlayers = this.state.homePlayers;
+      const awayPlayers = this.state.awayPlayers;
       const homePlayerOpts = homePlayers.map(player => {
         return <option key={player.id} id={player.id} value={player.id}>{player.fullName}</option>
       });

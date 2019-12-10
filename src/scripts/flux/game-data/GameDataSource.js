@@ -40,19 +40,23 @@ const GameDataSource = {
 
     // return callback(data);
 
-    const scoringPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'GOAL']);
-    const hittingPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'HIT']);
-    const blockedShotsPlays = _filter(data.gameData.liveData.plays.allPlays, ['request.eventTypeId', 'BLOCKED_SHOT']);
-    const shotPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'SHOT']);
-    const missedShotPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'MISSED_SHOT']);
-    const faceoffPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'FACEOFF']);
-    const takeawayPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'TAKEAWAY']);
-    const giveawayPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'GIVEAWAY']);
-    const penaltyPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'PENALTY']);
+    const scoringPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'GOAL']);
+    const hittingPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'HIT']);
+    const blockedShotsPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'BLOCKED_SHOT']);
+    const shotPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'SHOT']);
+    const missedShotPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'MISSED_SHOT']);
+    const faceoffPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'FACEOFF']);
+    const takeawayPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'TAKEAWAY']);
+    const giveawayPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'GIVEAWAY']);
+    const penaltyPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'PENALTY']);
 
 
     return callback({
-      gameData: data,
+      gameData: data.gameData,
+      liveData: data.liveData,
+      copyright: data.copyright,
+      gamePK: data.gamePk,
+      link: data.link,
       homePlayers,
       awayPlayers,
       scoringPlays,
