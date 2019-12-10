@@ -1,5 +1,9 @@
-import { fromJS } from 'immutable';
-import { ReduceStore } from 'flux/utils';
+import {
+  fromJS
+} from 'immutable';
+import {
+  ReduceStore
+} from 'flux/utils';
 import Dispatcher from '../Dispatcher';
 import {
   RECYCLE_GAME_DATA_STORE,
@@ -11,20 +15,43 @@ class GameDataStore extends ReduceStore {
   constructor() {
     super(Dispatcher);
   }
-  
+
   getInitialState() {
     const initialState = fromJS({
-      gameData: {}
+      gameData: {},
+      homePlayers: [],
+      awayPlayers: [],
+      scoringPlays: [],
+      hittingPlays: [],
+      blockedShotsPlays: [],
+      shotPlays: [],
+      missedShotPlays: [],
+      faceoffPlays: [],
+      takeawayPlays: [],
+      giveawayPlays: [],
+      penaltyPlays: [],
     });
     return initialState;
   }
 
   reduce(state, action) {
-    switch(action.type){
+    switch (action.type) {
       case FETCH_GAME_DATA:
         return state.set('gameData', {});
       case UPDATE_GAME_DATA:
-        return state.set('gameData', action.gameData);
+        state = state.set('gameData', action.data.gameData);
+        state = state.set('', action.data);
+        state = state.set('', action.data);
+        state = state.set('', action.data);
+        state = state.set('', action.data);
+        state = state.set('', action.data);
+        state = state.set('', action.data);
+        state = state.set('', action.data);
+        state = state.set('', action.data);
+        state = state.set('', action.data);
+        state = state.set('', action.data);
+        state = state.set('', action.data);
+        return state;
       case RECYCLE_GAME_DATA_STORE:
         state = this.getInitialState();
         return state;

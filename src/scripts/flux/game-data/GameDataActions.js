@@ -13,10 +13,10 @@ const GameDataActions = {
     });
     return GameDataSource.fetchGameData(this.updateGameData);
   },
-  updateGameData(gameData) {
+  updateGameData(data) {
     Dispatcher.dispatch({
       type: UPDATE_GAME_DATA,
-      gameData
+      data
     })
   },
   recycleGameData() {

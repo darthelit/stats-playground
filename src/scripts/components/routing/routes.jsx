@@ -4,7 +4,7 @@ import ScratchContainer from '../../containers/ScratchContainer'
 
 export default () => (
   <Switch>
-    <Route path="/scratch" component={Scratch} />
+    <Route path='/scratch' component={Scratch} />
   </Switch>
 );
 

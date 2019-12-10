@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+  filter as _filter,
   forEach as _forEach
 } from 'lodash';
 // import gameData from '../../../data/Blues_Jets_Game_1.js';
@@ -14,9 +15,7 @@ const GameDataSource = {
     //     gameData = data.data;
     //   });
     // const {data} = await axios.get('http://statsapi.web.nhl.com/api/v1/game/2018030412/feed/live');
-    const {
-      data
-    } = await axios.get('http://statsapi.web.nhl.com/api/v1/game/2018030417/feed/live');
+    const { data } = await axios.get('http://statsapi.web.nhl.com/api/v1/game/2018030417/feed/live');
 
     // return callback(data.data);
 
@@ -36,10 +35,36 @@ const GameDataSource = {
       }
     });
 
-    data['homePlayers'] = homePlayers;
-    data['awayPlayers'] = awayPlayers;
+    // data['homePlayers'] = homePlayers;
+    // data['awayPlayers'] = awayPlayers;
 
-    return callback(data);
+    // return callback(data);
+
+    const scoringPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'GOAL']);
+    const hittingPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'HIT']);
+    const blockedShotsPlays = _filter(data.gameData.liveData.plays.allPlays, ['request.eventTypeId', 'BLOCKED_SHOT']);
+    const shotPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'SHOT']);
+    const missedShotPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'MISSED_SHOT']);
+    const faceoffPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'FACEOFF']);
+    const takeawayPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'TAKEAWAY']);
+    const giveawayPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'GIVEAWAY']);
+    const penaltyPlays = _filter(data.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'PENALTY']);
+
+
+    return callback({
+      gameData: data,
+      homePlayers,
+      awayPlayers,
+      scoringPlays,
+      hittingPlays,
+      blockedShotsPlays,
+      shotPlays,
+      missedShotPlays,
+      faceoffPlays,
+      takeawayPlays,
+      giveawayPlays,
+      penaltyPlays,
+    });
   }
 }
 

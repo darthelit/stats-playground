@@ -1,0 +1,41 @@
+{
+  "FACEOFF": [
+    "Winner",
+    "Loser"
+  ],
+  "HIT": [
+    "Hitter",
+    "Hittee"
+  ],
+  "PENALTY": [
+    "PenaltyOn",
+    "DrewBy"
+  ],
+  "SHOT": [
+    "Shooter",
+    "Goalie"
+  ],
+  "BLOCKED_SHOT": [
+    "Blocker",
+    "Shooter"
+  ],
+  "STOP": [],
+  "GIVEAWAY": [
+    "PlayerID"
+  ],
+  "TAKEAWAY": [
+    "PlayerID"
+  ],
+  "MISSED_SHOT": [
+    "Shooter"
+  ],
+  "GOAL": [
+    "Scorer",
+    "Assist",
+    "Goalie"
+  ],
+  "PERIOD_END": [],
+  "PERIOD_OFFICIAL": [],
+  "PERIOD_READY": [],
+  "PERIOD_START": []
+}
