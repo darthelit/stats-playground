@@ -27,7 +27,7 @@ class GameDataStore extends ReduceStore {
       awayPlayers: [],
       scoringPlays: [],
       hittingPlays: [],
-      blockedShotsPlays: [],
+      blockedShotPlays: [],
       shotPlays: [],
       missedShotPlays: [],
       faceoffPlays: [],
@@ -48,7 +48,7 @@ class GameDataStore extends ReduceStore {
         state = state.set('awayPlayers', action.data.awayPlayers);
         state = state.set('scoringPlays', action.data.scoringPlays);
         state = state.set('hittingPlays', action.data.hittingPlays);
-        state = state.set('blockedShotsPlays', action.data.blockedShotsPlays);
+        state = state.set('blockedShotPlays', action.data.blockedShotsPlays);
         state = state.set('shotPlays', action.data.shotPlays);
         state = state.set('missedShotPlays', action.data.missedShotPlays);
         state = state.set('faceoffPlays', action.data.faceoffPlays);

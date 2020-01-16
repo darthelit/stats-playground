@@ -42,7 +42,7 @@ const GameDataSource = {
 
     const scoringPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'GOAL']);
     const hittingPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'HIT']);
-    const blockedShotsPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'BLOCKED_SHOT']);
+    const blockedShotPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'BLOCKED_SHOT']);
     const shotPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'SHOT']);
     const missedShotPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'MISSED_SHOT']);
     const faceoffPlays = _filter(data.liveData.plays.allPlays, ['result.eventTypeId', 'FACEOFF']);
@@ -61,7 +61,7 @@ const GameDataSource = {
       awayPlayers,
       scoringPlays,
       hittingPlays,
-      blockedShotsPlays,
+      blockedShotPlays,
       shotPlays,
       missedShotPlays,
       faceoffPlays,
