@@ -8,7 +8,6 @@ import {
 import GameDataActions from '../flux/game-data/GameDataActions';
 import GameDataStore from '../flux/game-data/GameDataStore';
 import util from '../utils/util';
-
 import '../../styles/style.scss';
 
 class ScratchContainer extends React.Component {
@@ -33,10 +32,10 @@ class ScratchContainer extends React.Component {
 
   render() {
     if(!util.isEmpty(this.state.gameData)) {
-      const { players } = this.state.gameData.gameData;
+      const { players } = this.state.gameData;
 
-      const homeTeam = this.state.gameData.gameData.teams.home;
-      const awayTeam = this.state.gameData.gameData.teams.away;
+      const homeTeam = this.state.gameData.teams.home;
+      const awayTeam = this.state.gameData.teams.away;
 
       const homePlayers = this.state.homePlayers;
       const awayPlayers = this.state.awayPlayers;
@@ -49,7 +48,7 @@ class ScratchContainer extends React.Component {
 
 
 
-      const scoringPlays = _filter(this.state.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'GOAL']);
+      const scoringPlays = _filter(this.state.liveData.plays.allPlays, ['result.eventTypeId', 'GOAL']);
       const goalDetails = scoringPlays.map(goal => {
         const scoringTeam = goal.team.triCode;
         const goalType = goal.result.strength.code === 'EVEN' ? `${goal.result.strength.name} Strength` : goal.result.strength.name;
@@ -77,7 +76,7 @@ class ScratchContainer extends React.Component {
       let homeTeamStats = {};
       let awayTeamStats = {};
 
-      const hittingPlays = _filter(this.state.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'HIT']);
+      const hittingPlays = _filter(this.state.liveData.plays.allPlays, ['result.eventTypeId', 'HIT']);
 
       _forEach(hittingPlays, (play) => {
         const hitter = _filter(play.players, ['playerType', 'Hitter'])[0];
@@ -170,7 +169,7 @@ class ScratchContainer extends React.Component {
 
 
 
-      const blockedShotPlays = _filter(this.state.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'BLOCKED_SHOT']);
+      const blockedShotPlays = _filter(this.state.liveData.plays.allPlays, ['result.eventTypeId', 'BLOCKED_SHOT']);
       _forEach(blockedShotPlays, (play) => {
         const blocker = _filter(play.players, ['playerType', 'Blocker'])[0];
         const shooter = _filter(play.players, ['playerType', 'Shooter'])[0];
@@ -227,8 +226,8 @@ class ScratchContainer extends React.Component {
 
 
 
-      const shotPlays = _filter(this.state.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'SHOT']);
-      const missedShotPlays = _filter(this.state.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'MISSED_SHOT']);
+      const shotPlays = _filter(this.state.liveData.plays.allPlays, ['result.eventTypeId', 'SHOT']);
+      const missedShotPlays = _filter(this.state.liveData.plays.allPlays, ['result.eventTypeId', 'MISSED_SHOT']);
       _forEach(shotPlays, (play) => {
         const shooter = _filter(play.players, ['playerType', 'Shooter'])[0];
 
@@ -292,7 +291,7 @@ class ScratchContainer extends React.Component {
 
 
 
-      const faceoffPlays = _filter(this.state.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'FACEOFF']);
+      const faceoffPlays = _filter(this.state.liveData.plays.allPlays, ['result.eventTypeId', 'FACEOFF']);
       _forEach(faceoffPlays, (play) => {
         const winner = _filter(play.players, ['playerType', 'Winner'])[0];
         const loser = _filter(play.players, ['playerType', 'Loser'])[0];
@@ -342,7 +341,7 @@ class ScratchContainer extends React.Component {
 
 
 
-      const takeawayPlays = _filter(this.state.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'TAKEAWAY']);
+      const takeawayPlays = _filter(this.state.liveData.plays.allPlays, ['result.eventTypeId', 'TAKEAWAY']);
       _forEach(takeawayPlays, (play) => {
         if(util.isEmpty(playerStats[play.players[0].player.id])) {
           playerStats[play.players[0].player.id] = {
@@ -368,7 +367,7 @@ class ScratchContainer extends React.Component {
 
 
 
-      const giveawayPlays = _filter(this.state.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'GIVEAWAY']);
+      const giveawayPlays = _filter(this.state.liveData.plays.allPlays, ['result.eventTypeId', 'GIVEAWAY']);
       _forEach(giveawayPlays, (play) => {
         if(util.isEmpty(playerStats[play.players[0].player.id])) {
           playerStats[play.players[0].player.id] = {
@@ -394,7 +393,7 @@ class ScratchContainer extends React.Component {
 
 
 
-      const penaltyPlays = _filter(this.state.gameData.liveData.plays.allPlays, ['result.eventTypeId', 'PENALTY']);
+      const penaltyPlays = _filter(this.state.liveData.plays.allPlays, ['result.eventTypeId', 'PENALTY']);
       _forEach(penaltyPlays, (play) => {
         const penaltyOn = _filter(play.players, ['playerType', 'PenaltyOn'])[0];
         const drewBy = _filter(play.players, ['playerType', 'DrewBy'])[0];
