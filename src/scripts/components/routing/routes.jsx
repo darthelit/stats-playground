@@ -1,12 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import ScratchContainer from '../../containers/ScratchContainer';
-// import ScheduleContainer from '../../containers/ScheduleContainer';
+import ScheduleContainer from '../../containers/ScheduleContainer';
 
 export default () => (
   <Switch>
-    <Route path='/scratch' component={Scratch} />
-    {/* <Route path='/schedule' component={Schedule} /> */}
+    <Route exact path='/scratch' component={Scratch} />
+    <Route exact path='/schedule' component={Schedule} />
   </Switch>
 );
 
