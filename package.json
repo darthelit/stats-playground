@@ -33,6 +33,7 @@
     "immutable": "^4.0.0-rc.12",
     "lodash": "~4.17.15",
     "moment": "^2.24.0",
+    "office-ui-fabric-react": "^7.89.1",
     "prop-types": "^15.7.2",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",

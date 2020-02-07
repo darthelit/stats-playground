@@ -6,6 +6,8 @@ import GameDataStore from '../flux/game-data/GameDataStore';
 import util from '../utils/util';
 import '../../styles/style.scss';
 
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
+
 class ScratchContainer extends React.Component {
   static getStores() {
     return [GameDataStore];
@@ -46,12 +48,18 @@ class ScratchContainer extends React.Component {
 
       // const homePlayers = this.state.homePlayers;
       // const awayPlayers = this.state.awayPlayers;
+      // const homePlayerOpts = homePlayers.map(player => {
+      //   return (
+      //     <option key={player.id} id={player.id} value={player.id}>
+      //       {player.fullName}
+      //     </option>
+      //   );
+      // });
       const homePlayerOpts = homePlayers.map(player => {
-        return (
-          <option key={player.id} id={player.id} value={player.id}>
-            {player.fullName}
-          </option>
-        );
+        return {
+          key: player.id,
+          text: player.fullName,
+        };
       });
       const awayPlayerOpts = awayPlayers.map(player => {
         return (
@@ -485,9 +493,15 @@ class ScratchContainer extends React.Component {
 
       return (
         <>
-          <span style={{ fontWeight: 'bold' }}>{homeTeam.name} (Home):</span>
-          <br />
-          <select>{homePlayerOpts}</select>
+          {/* <span style={{ fontWeight: 'bold' }}>{homeTeam.name} (Home):</span> */}
+          {/* <br /> */}
+          {/* <select>{homePlayerOpts}</select> */}
+          <Dropdown
+            placeholder='Select a player'
+            label={`${homeTeam.name} (Home)`}
+            options={homePlayerOpts}
+            styles={{ dropdown: { width: 300 } }}
+          />
 
           <br />
           <br />
