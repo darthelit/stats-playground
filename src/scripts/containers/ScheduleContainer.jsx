@@ -1,19 +1,27 @@
 import React from 'react';
 import { Container } from 'flux/utils';
-import GameDataAction from '../flux/game-data/GameDataActions';
-import GameDataStore from '../flux/game-data/GameDataStore';
+import TeamStore from '../flux/team/TeamStore';
+import ScheduleStore from '../flux/schedule/ScheduleStore';
+import ScheduleActions from '../flux/schedule/ScheduleActions';
+import SeasonStore from '../flux/season/SeasonStore';
+import SeasonActions from '../flux/season/SeasonActions';
 import util from '../utils/util';
 import '../../styles/style.scss';
 
 class ScheduleContainer extends React.Component {
   static getStores() {
-    return [GameDataStore];
+    return [TeamStore, ScheduleStore, SeasonStore];
   }
 
   static calculateState() {
     return {
-      ...GameDataStore.getState().toJS(),
+      ...TeamStore.getState().toJS(),
+      ...ScheduleStore.getState().toJS(),
+      ...SeasonStore.getState().toJS()
     };
+  }
+  componentDidMount() {
+    SeasonActions.fetchCurrentSeason(); 
   }
 }
 
