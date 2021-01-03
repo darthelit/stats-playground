@@ -23,7 +23,7 @@
   ],
   "description": "",
   "dependencies": {
-    "axios": "~0.19.0",
+    "axios": "~0.21.1",
     "baseui": "^9.52.0",
     "compression": "^1.7.4",
     "cross-env": "~6.0.0",
